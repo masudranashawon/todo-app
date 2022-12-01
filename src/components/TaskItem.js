@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { FiEdit, FiTrash } from "react-icons/fi";
 import { DeleteHandlerContext, EditHandlerContext } from "../App";
 
 const TaskItem = ({ task, handleEditSubmitter, editedText, setEditedText }) => {
+  const [isChecked, setIsChecked] = useState(false);
   const handleDelete = useContext(DeleteHandlerContext);
   const handleEdit = useContext(EditHandlerContext);
 
@@ -10,7 +11,12 @@ const TaskItem = ({ task, handleEditSubmitter, editedText, setEditedText }) => {
     <div className='task-item flex justify-between items-center bg-gradient-to-r from-gray-800 to-slate-800 p-5 rounded hover:from-teal-900 hover:to-gray-800 group'>
       <div className='task-item-left flex gap-3'>
         <span>
-          <input type='checkbox' className='accent-teal-400 cursor-pointer' />
+          <input
+            type='checkbox'
+            className='accent-teal-400 cursor-pointer'
+            checked={isChecked}
+            onChange={() => setIsChecked(!isChecked)}
+          />
         </span>
 
         {task.isEditable && (
@@ -26,7 +32,15 @@ const TaskItem = ({ task, handleEditSubmitter, editedText, setEditedText }) => {
         )}
 
         {!task.isEditable && (
-          <p className='group-hover:text-teal-400'>{task.text}</p>
+          <p
+            className={`group-hover:text-teal-400 ${
+              isChecked
+                ? "line-through text-gray-500 group-hover:text-teal-600"
+                : null
+            }`}
+          >
+            {task.text}
+          </p>
         )}
       </div>
       <div className='task-item-right flex gap-3 text-gray-500'>
