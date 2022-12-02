@@ -2,8 +2,8 @@ import { useRef, useState } from "react";
 
 const AddTask = ({ tasks, setTasks }) => {
   const [task, setTask] = useState("");
-
   const inputRef = useRef(null);
+
   // add task handler event
   const addTaskHandler = (e) => {
     e.preventDefault();
@@ -23,11 +23,11 @@ const AddTask = ({ tasks, setTasks }) => {
       },
       body: JSON.stringify({ text }),
     });
-
     const data = await res.json();
     // real-time data updation
     setTasks([...tasks, data]);
   };
+
   return (
     <form
       className='bg-gray-900 p-10 container mx-auto flex flex-col gap-5 justify-center items-center md:flex-row md:justify-between lg:max-w-4xl'
